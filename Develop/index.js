@@ -1,6 +1,7 @@
 // TODO: Include packages needed for this application
-//const fs = require('fs')
 const inquirer = require('inquirer');
+const fs = require('fs');
+const generateMarkdown = require('./utils/generateMarkdown');
 // TODO: Create an array of questions for user input
 const userQuestions = () => {
     return inquirer.prompt([{
@@ -78,16 +79,18 @@ const userQuestions = () => {
             message:'Is there anything else you would like to add to your REAM.ME about this project?',
             default: false
         }
-    ])
-}
-
+    ]);
+};
+userQuestions()
+.then(userQuestions => {
+    return generateMarkdown(userQuestions);
+})
 
 // TODO: Create a function to write README file
-function writeToFile(fileName, data) {}
+function writeToFile() {}
 
 // TODO: Create a function to initialize app
 function init() {}
 
 // Function call to initialize app
 init();
-userQuestions();
