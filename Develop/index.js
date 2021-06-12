@@ -9,8 +9,8 @@ const userQuestions = () => {
             type: 'input',
             name: 'name',
             message: 'What is the Title of your Project? (required)',
-            validate: projectName => {
-                if (projectName) {
+            validate: title => {
+                if (title) {
                     return true;
                 } else {
                     console.log('Please enter your Projects Title!');
@@ -40,7 +40,7 @@ const userQuestions = () => {
                     return true;
                 } else {
                     console.log("Please tell us what languages this App was built with!");
-                    return false;
+                    return false
                 }
             }
         },
@@ -111,23 +111,19 @@ const userQuestions = () => {
 userQuestions()
 .then(userQuestions => {
     return generateMarkdown(userQuestions);
-});
+})
+.then(generateMarkdown => {
+    return writeToFile(generateMarkdown);
+})
+
 
 // TODO: Create a function to write README file
-function writeToFile = readMeFile => {
-    return new Promise((resolve, reject) => {
-        fs.writeFile('./utils/generateMarkdown.js', readMeFile, err => {
-            if(err) {
-                reject(err);
-                return;
-            }
-            resolve({
-                ok:true,
-                message:'Read me Generated!'
-            });
-        });
+function writeToFile () {
+    fs.writeFile('index.js', generateMarkdown(), err => {
+        if (err) throw err;
+        console.log('Read.Me file is Generated!!')
     });
-};
+}
 
 // TODO: Create a function to initialize app
 function init() {}
