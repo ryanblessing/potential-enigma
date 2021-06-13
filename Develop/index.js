@@ -1,16 +1,15 @@
 // TODO: Include packages needed for this application
 const inquirer = require('inquirer');
 const fs = require('fs');
-const generateMarkdown = require('./utils/generateMarkdown');
+const generateMarkdown = require('./utils/generateMarkdown.js');
 
 // TODO: Create an array of questions for user input
-const userQuestions = () => {
-    return inquirer.prompt([{
+const userQuestions = [{
             type: 'input',
-            name: 'name',
+            name: 'title',
             message: 'What is the Title of your Project? (required)',
-            validate: title => {
-                if (title) {
+            validate: projectName => {
+                if (projectName) {
                     return true;
                 } else {
                     console.log('Please enter your Projects Title!');
@@ -106,27 +105,50 @@ const userQuestions = () => {
             message: 'Please choose a license for your READ.ME file, check all that may apply!',
             choices:['Apache License 2.0','MIT','ISC License', ' GNU GPLv3', 'Mozilla Public License 2.0', 'The Unlicense']
         }
-    ]);
-};
-userQuestions()
-.then(userQuestions => {
+    ]
+
+
+/*.then(userQuestions => {
+    console.log(userQuestions);
     return generateMarkdown(userQuestions);
 })
 .then(generateMarkdown => {
-    return writeToFile(generateMarkdown);
-})
+   return writeToFile(generateMarkdown);
+})*/
+
 
 
 // TODO: Create a function to write README file
-function writeToFile () {
-    fs.writeFile('index.js', generateMarkdown(), err => {
-        if (err) throw err;
-        console.log('Read.Me file is Generated!!')
+const writeToFile = fileContent => {
+    return new Promise((resolve, reject) => {
+      fs.writeFile('Read.Me', fileContent, err => {
+        // if there's an error, reject the Promise and send the error to the Promise's `.catch()` method
+        if (err) {
+          reject(err);
+          // return out of the function here to make sure the Promise doesn't accidentally execute the resolve() function as well
+          return;
+        }
+  
+        // if everything went well, resolve the Promise and send the successful data to the `.then()` method
+        resolve({
+          ok: true,
+          message: 'Read.me was created!'
+        });
+      });
     });
-}
+  };
 
 // TODO: Create a function to initialize app
-function init() {}
+function init() {
+     inquirer.prompt(userQuestions)
+     .then(function(data){
+        writeToFile(generateMarkdown(data))
+        console.log(data)
+     })
+     //.then(generateMarkdown => {
+       // return writeToFile(generateMarkdown);
+    //})
+}
 
 // Function call to initialize app
 init();
