@@ -121,7 +121,7 @@ const userQuestions = [{
 // TODO: Create a function to write README file
 const writeToFile = fileContent => {
     return new Promise((resolve, reject) => {
-      fs.writeFile('Read.Me', fileContent, err => {
+      fs.writeFile('./dist/Read.Me', fileContent, err => {
         // if there's an error, reject the Promise and send the error to the Promise's `.catch()` method
         if (err) {
           reject(err);
