@@ -1,7 +1,7 @@
  // TODO: Create a function that returns a license badge based on which license is passed in
  const licenseArray = ['ApacheLicense2', 'MIT', 'ISCLicense', 'GNUGPLv3', 'MozillaPublicLicense2', 'TheUnlicense', 'NoLicense']
 
- function renderLicenseBadge(license) {
+ function renderLicenseBadge(licenseArray) {
    switch (licenseArray) {
      case "ApacheLicense2":
        return (`<img src="https://img.shields.io/badge/License-Apache%202.0-brightgreen"`)
@@ -85,6 +85,7 @@ if(licenseChoices === licenseArray[6]) {
 
   ### Licensing 
   ${renderLicenseBadge(data.licenses)}
+  ${data.licenses}
 
   ### Connect With Me
   For any and all questions please email me @${data.email} or ${data.link} Thank you!
